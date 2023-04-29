@@ -1,0 +1,30 @@
+#  Baianat Nuxt 3 Dashboard Starter 
+
+![alt text](https://lh3.googleusercontent.com/a-/ACNPEu9tCej8dVUBTEWELnvMQDk8h19cZX2UQI8q2IdPcdVa0HxwtpMhG0hr7Q1UiPJMNCW17LS_uXtTyxEuDmzK5umjIW-uXgcwMttKfH-vgYmU3f1C0XQ7IgaRDCaC2hYS7LsW47lzVvEw1bakBrEhAiOI5kBzjuH4Ne2NXAaCZMAvgB_g0Q0GN9EK7BHWVnyimRSFrTmVBa0mppCKOMGbMvQ7Sp2nRrYEGPXnBmST_5CxFYDrikLJNk3FgLLiJsClgxvqM5JanXmlPPgISO0SHLqiF6xqLt7GDhp89zEeAY8eiIKIYMCTZj8BP6CMP5qQHLA1_43n9hq6qVvFO9kD9L-bn6kY4-1S8LLZvDoRKcGYVh5eCGBFmC16_qXXafB_2-RsFKR3cNTb9XrIcsKuOKRs1kBk6zMhIomBK14XbS49wCTd7jla2_2ti8g0YT6a6wQTeuB0qv0uMWKfadMNziHMVpmaw_1jZNDYYvnhS7Zd24rdRERtsQpezgdXmoQrmJI6nuclqqLmNpYs8NiMa_C2mIkhnJcccKFsduypY7sD06699TnFIL5RNgcNlxGykvJJyoJkWvxQj9FE4sSma18uDuSPzRnEPR2LYrzQdweP-eH8fP4tp7MEEbcgs1gEEqJw2WxEuxJfJdMaIGskTNpPrGjWO94F-hZn6yaUUvGmNVZGoXUMDtbMTnsZbl-ySk-pN_BZNK450slVEi6hBM2PQWxxbBt3UwTatHpqbqoMghXEtU5zFpClb2Ckdaic4lJnenyJwfZHRnGyFl5ZNyQetxj9MQvkrV8wqOCAdehJEA8IBA_BzAdeuBMGFtHX8jwLfL0i3vTKOH2T99YWEX1KN02HiZfXN7Em6zCIvwyjXL0FOtdfrgT-IZZ4gVGzdxo0rcHNcAoHgAhpMTVPxX1dqEaai1mKtU-azWCUkKF9XQlOQcchY90aIjvO=s288-p-rw-no)
+
+
+# install packages
+
+```bash
+pnpm install  # npm install
+```
+
+or
+
+```bash
+yarn install
+```
+
+# run the application 
+
+
+```bash
+pnpm dev # npm run dev
+```
+
+or
+
+```bash
+yarn dev
+```
+

@@ -1,0 +1,37 @@
+query getCars {
+  allCars {
+    id
+    created
+    updated
+    ownerName
+    plateNumber
+    color
+    blocked
+    blockedAt
+    gateIds
+  }
+}
+
+mutation addCar(
+  $color: String
+  $gateids: [String]
+  $ownerName: String!
+  $plateNumber: String!
+) {
+  addCar(
+    color: $color
+    gateIds: $gateids
+    ownerName: $ownerName
+    plateNumber: $plateNumber
+  ) {
+    car {
+      id
+      color
+      blocked
+      plateNumber
+      gateIds
+      ownerName
+      created
+    }
+  }
+}

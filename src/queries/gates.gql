@@ -1,0 +1,10 @@
+query getGates {
+  gates {
+    id
+    created
+    name
+    description
+    lat
+    long
+  }
+}
