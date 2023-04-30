@@ -1,5 +1,6 @@
 <template>
   <div class="card">
+    <Toast />
     <DataTable
       :value="cardata"
       paginator
@@ -7,6 +8,7 @@
       :rows="10"
       dataKey="id"
       filterDisplay="menu"
+      v-model:filters="filters"
       :loading="loading"
     >
       <template #header>
@@ -27,45 +29,34 @@
 
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
-            <InputText placeholder="Keyword Search" />
+            <InputText
+              placeholder="Keyword Search"
+              v-model="filters['global'].value"
+            />
           </span>
         </div>
       </template>
       <template #empty> No cars found. </template>
       <template #loading> Loading cars data. Please wait. </template>
-      <Column field="name" header="Owner Name" style="min-width: 12rem">
+      <Column
+        field="ownerName"
+        header="Owner Name"
+        style="min-width: 12rem"
+        sortable
+        filterField="ownerName"
+        filterMatchMode="contains"
+      >
         <template #body="{ data }">
           {{ data.ownerName }}
-        </template>
-        <template #filter="{ filterModel }">
-          <InputText
-            v-model="filterModel.value"
-            type="text"
-            class="p-column-filter"
-            placeholder="Search by name"
-          />
         </template>
       </Column>
 
       <Column field="Color" header="Plate Color" style="min-width: 12rem">
         <template #body="{ data }">
           <Tag
-            severity="danger"
+            :style="{ 'background-color': rgba(data.color) }"
             :value="data.color"
             rounded
-            v-if="data.color === 'red'"
-          ></Tag>
-          <Tag
-            severity="primary"
-            :value="data.color"
-            rounded
-            v-if="data.color === 'blue'"
-          ></Tag>
-          <Tag
-            style="background-color: gray"
-            :value="data.color"
-            rounded
-            v-if="data.color === 'grey'"
           ></Tag>
         </template>
       </Column>
@@ -75,39 +66,27 @@
         </template>
       </Column>
       <Column
-        field="PlateNumber"
+        field="plateNumber"
         header="Plate Number"
         style="min-width: 12rem"
+        filterField="plateNumber"
+        filterMatchMode="contains"
       >
         <template #body="{ data }">
           {{ data.plateNumber }}
         </template>
-        <template #filter="{ filterModel }">
-          <InputText
-            v-model="filterModel.value"
-            type="text"
-            class="p-column-filter"
-            placeholder="Search by name"
-          />
-        </template>
       </Column>
 
       <Column
-        header="Date Created"
-        filterField="date "
+        field="created"
+        header="Date"
+        sortable
+        filterField="date"
         dataType="date"
         style="min-width: 10rem"
       >
         <template #body="{ data }">
-          {{ data.created }}
-        </template>
-        <template #filter="{ filterModel }">
-          <Calendar
-            v-model="filterModel.value"
-            dateFormat="mm/dd/yy"
-            placeholder="mm/dd/yyyy"
-            mask="99/99/9999"
-          />
+          {{ formatDate(data.created) }}
         </template>
       </Column>
       <Column
@@ -126,18 +105,32 @@
           ></i>
         </template>
       </Column>
+      <Column
+        field="Blocked"
+        header="Block"
+        dataType="boolean"
+        style="min-width: 6rem"
+      >
+        <template #body="{ data }">
+          <Button
+            type="button"
+            :severity="data.blocked ? 'secondary' : 'primary'"
+            :label="!data.blocked ? 'block' : 'Unblock'"
+            @click="blocking(data.id, data.blocked)"
+          />
+        </template>
+      </Column>
     </DataTable>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import CustomerService from "~~/services/CustomerService";
+
 import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const cardata = ref();
-const customers = ref();
-const filters = ref();
-const customerService = new CustomerService();
 
 const loading = ref(true);
 
@@ -146,18 +139,10 @@ async function getData() {
   const { data } = await useAsyncGql("getCars", {});
 
   cardata.value = data.value.allCars;
+  loading.value = false;
   console.log(cardata.value);
 }
 
-onMounted(() => {
-  customerService.getCustomersLarge().then((data) => {
-    customers.value = data;
-    loading.value = false;
-    customers.value.forEach(
-      (customer) => (customer.date = new Date(customer.date))
-    );
-  });
-});
 function checktype(input) {
   switch (input) {
     case "red":
@@ -166,85 +151,78 @@ function checktype(input) {
       return "ملاكي";
     case "grey":
       return "أتوبيس";
+    case "yellow":
+      return "أجنبية";
+    case "orange":
+      return "تاكسي";
+    case "beige":
+      return "ليموزين";
   }
 }
-const initFilters = () => {
-  filters.value = {
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: {
-      operator: FilterOperator.AND,
-      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-    },
-    "country.name": {
-      operator: FilterOperator.AND,
-      constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-    },
-    representative: { value: null, matchMode: FilterMatchMode.IN },
-    date: {
-      operator: FilterOperator.AND,
-      constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-    },
-    balance: {
-      operator: FilterOperator.AND,
-      constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-    },
-    status: {
-      operator: FilterOperator.OR,
-      constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-    },
-    activity: { value: [0, 100], matchMode: FilterMatchMode.BETWEEN },
-    verified: { value: null, matchMode: FilterMatchMode.EQUALS },
-  };
-};
-
-initFilters();
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
 
 const formatDate = (value) => {
-  return value.toLocaleDateString("en-US", {
+  const date = new Date(value);
+  return date.toLocaleDateString("en-US", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
 };
-const formatCurrency = (value) => {
-  return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
-};
-const clearFilter = () => {
-  initFilters();
-};
-const getCustomers = (data) => {
-  return [...(data || [])].map((d) => {
-    d.date = new Date(d.date);
 
-    return d;
-  });
-};
-const getSeverity = (status) => {
-  switch (status) {
-    case "unqualified":
-      return "danger";
+function rgba(color) {
+  switch (color) {
+    case "red":
+      return "#d74343";
 
-    case "qualified":
-      return "success";
+    case "blue":
+      return "#3B82F6";
 
-    case "new":
-      return "info";
+    case "orange":
+      return "#fa8e42";
 
-    case "negotiation":
-      return "warning";
+    case "grey":
+      return "#a7a7a7";
 
-    case "renewal":
-      return null;
+    case "yellow":
+      return "#eab308";
+    case "beige":
+      return "#d7c58b";
   }
-};
+}
+async function blocking(myid, block) {
+  if (block) {
+    console.log(block);
+    const { data } = await useAsyncGql("unblock", {
+      id: myid,
+    });
+    console.log(data.value);
+    toast.add({
+      severity: "success",
+      summary: "Info",
+      detail: `Car with id : ${myid} unblocked succesfully`,
+      life: 3000,
+    });
+    await getData();
+  } else {
+    const { data } = await useAsyncGql("block", {
+      id: myid,
+    });
+    toast.add({
+      severity: "success",
+      summary: "Info",
+      detail: `Car with id : ${myid} blocked succesfully`,
+      life: 3000,
+    });
+    await getData();
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .colorspan {
-  padding: 0.2rem 0.5rem;
-  color: white;
-  border-radius: 1.5rem;
   filter: contrast(65%);
-  font-weight: 600;
 }
 </style>

@@ -24,7 +24,6 @@ async function fetch() {
   }
   localStorage.setItem("token", token.value);
 }
-
 </script>
 
 <template>
@@ -32,14 +31,7 @@ async function fetch() {
     class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
   >
     <div class="grid justify-content-center p-2 lg:p-0" style="min-width: 80%">
-      <div class="col-12 mt-5 xl:mt-0 text-center">
-        <img
-          :src="`/images/logo-${logoColor}.svg`"
-          alt="Baianat logo"
-          class="mb-5"
-          style="width: 81px; height: 60px"
-        />
-      </div>
+      <div class="col-12 mt-5 xl:mt-0 text-center"></div>
       <div
         class="col-12 xl:col-6"
         style="
@@ -64,14 +56,8 @@ async function fetch() {
           "
         >
           <div class="text-center mb-5">
-            <img
-              src="/images/avatar/bernardodominic.png"
-              alt="Image"
-              height="50"
-              class="mb-3"
-            />
             <div class="text-900 text-3xl font-medium mb-3">
-              Welcome, Baianater!
+              Welcome to Smart Gate System !
             </div>
             <span class="text-600 font-medium">Sign in to continue</span>
           </div>
@@ -101,7 +87,6 @@ async function fetch() {
               :toggle-mask="true"
               class="w-full mb-3"
               input-class="w-full"
-              input-style="padding:1rem"
             />
 
             <div class="flex align-items-center justify-content-between mb-5">
@@ -128,8 +113,8 @@ async function fetch() {
   </div>
 </template>
 
-<style scoped>
-.pi-eye {
+<style>
+/* .pi-eye {
   transform: scale(1.6);
   margin-right: 1rem;
 }
@@ -137,5 +122,15 @@ async function fetch() {
 .pi-eye-slash {
   transform: scale(1.6);
   margin-right: 1rem;
+} */
+
+.p-input-icon-left > i,
+.p-input-icon-left > svg,
+.p-input-icon-right > i,
+.p-input-icon-right > svg {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  margin-top: -0.5rem;
 }
 </style>

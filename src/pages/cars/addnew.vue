@@ -123,6 +123,11 @@ async function addData() {
     gateids: gatesid,
   });
   if (data.value) {
+    name.value = "";
+    selectedColor.value = "";
+    plate.value = "";
+    selectedGates.value = "";
+
     toast.add({
       severity: "success",
       summary: "Info",
@@ -131,7 +136,6 @@ async function addData() {
     });
   }
 }
-
 </script>
 
 <style></style>

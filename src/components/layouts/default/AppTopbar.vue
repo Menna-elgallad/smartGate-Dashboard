@@ -1,32 +1,38 @@
 <script lang="ts">
 export default {
-  emits: ['topbar-menu-toggle', 'menu-toggle'],
+  emits: ["topbar-menu-toggle", "menu-toggle"],
   computed: {
     darkTheme() {
       return this.$appState.darkTheme;
-    }
+    },
   },
   methods: {
     onMenuToggle(event) {
-      this.$emit('menu-toggle', event);
+      this.$emit("menu-toggle", event);
     },
     onTopbarMenuToggle(event) {
-      this.$emit('topbar-menu-toggle', event);
+      this.$emit("topbar-menu-toggle", event);
     },
     topbarImage() {
-      return this.$appState.darkTheme ? '/images/logo-white.svg' : '/images/logo-dark.svg';
-    }
-  }
+      return this.$appState.darkTheme ? "/images/logo.png" : "/images/logo.png";
+    },
+    signout() {
+      localStorage.removeItem("token");
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
 <template>
   <div class="layout-topbar">
     <NuxtLink to="/" class="layout-topbar-logo">
-      <img alt="Logo" :src="topbarImage()">
-      <span>Baianat</span>
+      <img alt="Logo" :src="topbarImage()" style="height: 120px" />
     </NuxtLink>
-    <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
+    <button
+      class="p-link layout-menu-button layout-topbar-button"
+      @click="onMenuToggle"
+    >
       <i class="pi pi-bars" />
     </button>
 
@@ -37,7 +43,7 @@ export default {
         enterActiveClass: 'scalein',
         leaveToClass: 'hidden',
         leaveActiveClass: 'fadeout',
-        hideOnOutsideClick: true
+        hideOnOutsideClick: true,
       }"
       class="p-link layout-topbar-menu-button layout-topbar-button"
     >
@@ -45,22 +51,7 @@ export default {
     </button>
     <ul class="layout-topbar-menu hidden lg:flex origin-top">
       <li>
-        <button class="p-link layout-topbar-button">
-          <i class="pi pi-calendar" />
-          <span>Events</span>
-        </button>
-      </li>
-      <li>
-        <button class="p-link layout-topbar-button">
-          <i class="pi pi-cog" />
-          <span>Settings</span>
-        </button>
-      </li>
-      <li>
-        <button class="p-link layout-topbar-button">
-          <i class="pi pi-user" />
-          <span>Profile</span>
-        </button>
+        <Button label="Sign out" @click="signout()" />
       </li>
     </ul>
   </div>

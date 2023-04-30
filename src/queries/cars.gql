@@ -35,3 +35,21 @@ mutation addCar(
     }
   }
 }
+
+mutation block($id: String!) {
+  blockCar(carId: $id) {
+    car {
+      id
+      ownerName
+    }
+  }
+}
+
+mutation unblock($id: String!) {
+  unblockCar(carId: $id) {
+    car {
+      id
+      ownerName
+    }
+  }
+}
