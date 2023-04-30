@@ -4,7 +4,20 @@ const types = ref([]);
 const colors = ref();
 const loading = ref(true);
 const countedTypes = ref();
-await getDataCars();
+const router = useRouter();
+onMounted(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    useGqlToken(token);
+    console.log("logout");
+
+    return;
+  } else {
+    router.push("/login");
+    console.log("logout");
+  }
+});
+
 function countItems(arr) {
   return arr.reduce((acc, curr) => {
     if (curr in acc) {
@@ -15,10 +28,11 @@ function countItems(arr) {
     return acc;
   }, {});
 }
+//  getDataCars();
 async function getDataCars() {
   const { data } = await useAsyncGql("getCars", {});
 
-  cardata.value = data.value.allCars;
+  cardata.value = data?.value?.allCars;
   loading.value = false;
   console.log(cardata.value);
   colors.value = cardata.value.map((e) => {
@@ -49,6 +63,7 @@ async function getDataCars() {
   countedTypes.value = Object.entries(countItems(types.value));
   console.log(countedTypes.value);
 }
+getDataCars();
 </script>
 
 <template>
@@ -66,7 +81,7 @@ async function getDataCars() {
             <div class="ml-3">
               <span class="block text-900 font-semibold">Cars in System</span>
               <div class="text-500 text-xl mt-1">
-                {{ cardata.length }}
+                {{ cardata?.length }}
               </div>
             </div>
           </div>

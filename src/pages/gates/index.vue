@@ -34,11 +34,25 @@
           </div>
           <div class="flex justify-content-between">
             <div class="field w-6">
-              <label for="latitude" style="font-weight: 500">latitude </label>
+              <label for="latitude" style="font-weight: 500"
+                >Latitude
+                <span class="text-blue-400 text-sm">
+                  (Horizontal lines that measure distance north or south of the
+                  equator)</span
+                >
+              </label>
+
               <InputText id="latitude" type="text" v-model="lat" />
             </div>
             <div class="field w-6 ml-2">
-              <label for="longitude" style="font-weight: 500">longitude </label>
+              <label for="longitude" style="font-weight: 500"
+                >Longitude
+                <span class="text-blue-400 text-sm"
+                  >(Vertical lines that measure east or west of the meridian in
+                  Greenwich)</span
+                >
+              </label>
+
               <InputText id="longitude" type="text" v-model="long" />
             </div>
           </div>

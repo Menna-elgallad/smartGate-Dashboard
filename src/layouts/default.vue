@@ -91,7 +91,8 @@ export default {
           "layout-mobile-sidebar-active": this.mobileMenuActive,
           "p-input-filled": this.$primevue.config.inputStyle === "filled",
           "p-ripple-disabled": this.$primevue.config.ripple === false,
-          "layout-theme-light": this.$appState.theme.startsWith("saga"),
+          "layout-theme-light":
+            this.$appState.theme.startsWith("lara-light-blue"),
         },
       ];
     },
