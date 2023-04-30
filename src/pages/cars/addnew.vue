@@ -131,7 +131,7 @@ async function addData() {
     toast.add({
       severity: "success",
       summary: "Info",
-      detail: "Data Added successfully",
+      detail: "Car Data Added successfully",
       life: 3000,
     });
   }

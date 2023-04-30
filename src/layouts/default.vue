@@ -1,7 +1,7 @@
 <script lang="ts">
 import AppTopBar from "~/components/layouts/default/AppTopbar.vue";
 import AppMenu from "~/components/layouts/default/AppMenu.vue";
-import AppConfig from "~/components/layouts/default/AppConfig.vue";
+// import AppConfig from "~/components/layouts/default/AppConfig.vue";
 import AppFooter from "~/components/layouts/default/AppFooter.vue";
 export default {
   setup() {
@@ -20,7 +20,7 @@ export default {
   components: {
     AppTopBar,
     AppMenu,
-    AppConfig,
+    // AppConfig,
     AppFooter,
   },
   data() {
@@ -66,6 +66,11 @@ export default {
               label: "Camera stream",
               icon: "pi pi-fw pi-camera",
               to: "/camera",
+            },
+            {
+              label: "Gates",
+              icon: "pi pi-fw pi-sign-in",
+              to: "/gates",
             },
           ],
         },
@@ -199,7 +204,7 @@ export default {
       <AppFooter />
     </div>
 
-    <AppConfig :layout-mode="layoutMode" @layout-change="onLayoutChange" />
+    <!-- <AppConfig :layout-mode="layoutMode" @layout-change="onLayoutChange" /> -->
     <transition name="layout-mask">
       <div v-if="mobileMenuActive" class="layout-mask p-component-overlay" />
     </transition>

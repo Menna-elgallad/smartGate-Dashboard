@@ -8,3 +8,16 @@ query getGates {
     long
   }
 }
+
+mutation createGate(
+  $name: String!
+  $description: String!
+  $lat: String!
+  $long: String!
+) {
+  createGate(lat: $lat, long: $long, description: $description, name: $name) {
+    gate {
+      id
+    }
+  }
+}
