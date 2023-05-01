@@ -1,1 +1,7 @@
 // Suggested location to add your overrides so that migration would be easy by just updating the SASS folder in the future
+.p-dialog .p-dialog-footer {
+  border-top: 2px solid #cccccc6c !important;
+
+  padding: 1.5rem 1.5rem 1.5rem !important;
+
+}

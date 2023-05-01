@@ -12,6 +12,7 @@
     "lint:fix": "pnpm run lint --fix"
   },
   "dependencies": {
+    "@lottiefiles/lottie-player": "^1.7.1",
     "nuxt-graphql-client": "^0.2.18",
     "pinia": "^2.0.26"
   },

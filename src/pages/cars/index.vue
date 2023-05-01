@@ -222,7 +222,5 @@ async function blocking(myid, block) {
 </script>
 
 <style lang="scss" scoped>
-.colorspan {
-  filter: contrast(65%);
-}
+
 </style>

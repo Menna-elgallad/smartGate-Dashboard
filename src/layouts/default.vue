@@ -63,6 +63,11 @@ export default {
               ],
             },
             {
+              label: "History",
+              icon: "pi pi-fw pi-history",
+              to: "/history",
+            },
+            {
               label: "Camera stream",
               icon: "pi pi-fw pi-camera",
               to: "/camera",
