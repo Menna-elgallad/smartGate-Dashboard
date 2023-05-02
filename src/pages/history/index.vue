@@ -30,7 +30,7 @@
         header="Owner Name"
         style="min-width: 12rem"
         sortable
-        filterField="ownerName"
+        filterField="car.ownerName"
         filterMatchMode="contains"
       >
         <template #body="{ data }">
@@ -47,7 +47,7 @@
         field="plateNumber"
         header="Plate Number"
         style="min-width: 12rem"
-        filterField="plateNumber"
+        filterField="car.plateNumber"
         filterMatchMode="contains"
       >
         <template #body="{ data }">
@@ -57,7 +57,7 @@
 
       <Column
         field="created"
-        header="Date"
+        header="Entered"
         sortable
         filterField="date"
         dataType="date"

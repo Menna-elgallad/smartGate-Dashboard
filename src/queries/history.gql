@@ -2,7 +2,14 @@ query history($gateid: String, $carId: String, $created: String) {
   history(gateId: $gateid, carId: $carId, created: $created) {
     id
     created
-    carId
-    gateId
+    car {
+      id
+      ownerName
+      plateNumber
+      color
+    }
+    gate {
+      name
+    }
   }
 }
