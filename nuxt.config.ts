@@ -65,7 +65,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '~/modules/primevue',
-    'nuxt-graphql-client'
+    'nuxt-graphql-client' ,
+    'nuxt-icon'
   ],
   runtimeConfig: {
     public: {

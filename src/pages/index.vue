@@ -64,41 +64,121 @@ async function getDataCars() {
   console.log(countedTypes.value);
 }
 getDataCars();
+const chartData = ref({
+  labels: ["Q1", "Q2", "Q3", "Q4"],
+  datasets: [
+    {
+      label: "Sales",
+      data: [540, 325, 702, 620],
+      backgroundColor: [
+        "rgba(255, 159, 64, 0.2)",
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+      ],
+      borderColor: [
+        "rgb(255, 159, 64)",
+        "rgb(75, 192, 192)",
+        "rgb(54, 162, 235)",
+        "rgb(153, 102, 255)",
+      ],
+      borderWidth: 1,
+    },
+  ],
+});
+const chartOptions = ref({
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+});
 </script>
 
 <template>
   <div class="grid">
-    <div class="col-12 lg:col-6 xl:col-6">
-      <div class="card mb-0">
-        <div class="flex justify-content-between mb-3">
+    <div class="col-12 lg:col-6 xl:col-5 card">
+      <div class="mb-0">
+        <div class="mb-3">
           <div class="part1 flex">
-            <div
-              class="flex align-items-center justify-content-center bg-blue-100 border-round mt-1"
-              style="width: 2.5rem; height: 2.5rem"
-            >
-              <i class="pi pi-fw pi-car text-blue-500 text-3xl" />
-            </div>
-            <div class="ml-3">
-              <span class="block text-900 font-semibold">Cars in System</span>
-              <div class="text-500 text-xl mt-1">
+            <div class="ml-3 flex justify-content-between w-full">
+              <span class="block text-900 text-2xl font-semibold"
+                >Cars in System</span
+              >
+              <div class="text-900 text-2xl font-semibold">
                 {{ cardata?.length }}
               </div>
             </div>
           </div>
-          <div class="part2 grid" v-if="countedTypes">
+          <div class="part2 grid mt-4" v-if="countedTypes">
             <div
-              class="type col-6"
+              class="type col-6 flex flex-column align-items-center"
               v-for="(item, index) in countedTypes"
               :key="index"
             >
-              <span class="text-green-500 font-medium">{{ item[1] }}</span>
-              <span class="text-900 font-medium mr-2">{{ item[0] }}</span>
+              <div
+                class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width: 3.5rem; height: 3.5rem"
+              >
+                <!-- <i class="pi pi-car text-blue-500 text-5xl" /> -->
+                <Icon
+                  v-if="item[0] === 'ملاكي'"
+                  name="ic:baseline-directions-car-filled"
+                ></Icon>
+              </div>
+
+                <div
+                v-if="item[0] === 'نقل'"
+                class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width: 3.5rem; height: 3.5rem"
+              >
+              <Icon  name="fe:truck" class=" text-pink-400"></Icon>
+
+                </div>
+                <div
+                v-if="item[0] === 'أتوبيس'"
+                class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width: 3.5rem; height: 3.5rem"
+              >
+              <Icon
+
+                  name="ic:baseline-directions-bus"
+                ></Icon>
+                </div>
+                <div
+                v-if="item[0] === 'أجنبية'"
+                class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width: 3.5rem; height: 3.5rem"
+              >
+                <Icon
+
+                  name="ic:twotone-taxi-alert"
+                ></Icon>
+                </div>
+                <div
+                v-if="item[0] === 'تاكسي'"
+                class="flex align-items-center justify-content-center bg-blue-100 border-round"
+                style="width: 3.5rem; height: 3.5rem"
+              >
+
+                <Icon name="map:taxi-stand"></Icon>
+                </div>
+              </div>
+              <div class="car-data">
+                <div class="text-2xl font-bold ml-2 mt-2">{{ item[1] }}</div>
+                <div class="text-900 font-medium mr-2">{{ item[0] }}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="col-12 xl:col-7">
+      <div class="card">
+        <Chart type="bar" :data="chartData" :options="chartOptions" />
+      </div>
+    </div>
     <div class="col-12 xl:col-6">
       <div class="card">
         <h5>Cars Data</h5>
@@ -129,8 +209,5 @@ getDataCars();
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.type {
-  direction: rtl;
 }
 </style>
