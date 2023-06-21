@@ -183,7 +183,7 @@ const chartOptions = ref({
       <div class="card">
         <h5>Cars Data</h5>
         <NuxtLink to="/cars" class="linkCar">
-          <img src="../assets/img//Screenshot 2023-04-30 151753.png" alt class="table-img" />
+          <img src="@/assets/img/board.png" alt class="table-img" />
         </NuxtLink>
       </div>
     </div>
