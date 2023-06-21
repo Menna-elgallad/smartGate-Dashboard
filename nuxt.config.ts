@@ -107,10 +107,6 @@ export default defineNuxtConfig({
     }
   },
 
-  nitro: {
-    preset: 'vercel'
-  },
-
   srcDir: 'src/',
 
   vite: {
