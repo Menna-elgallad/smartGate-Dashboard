@@ -9,17 +9,15 @@
           <InputText id="name1" type="text" v-model="name" />
         </div>
         <div class="field">
-          <label for="Paltenumber" style="font-weight: 500"
-            >Plate Number
-            <span class="text-blue-400 text-sm"
-              >(Numbers first then letters)</span
-            >
+          <label for="Paltenumber" style="font-weight: 500">
+            Plate Number
+            <span class="text-blue-400 text-sm">(Numbers first then letters)</span>
           </label>
           <InputText id="Paltenumber" type="text" v-model="plate" />
         </div>
 
         <div class="field">
-          <label for="" style="font-weight: 500">Plate Color</label>
+          <label for style="font-weight: 500">Plate Color</label>
           <Dropdown
             v-model="selectedColor"
             :options="countries"
@@ -31,19 +29,17 @@
               <div v-if="slotProps.value" class="flex align-items-center">
                 <div>{{ slotProps.value.name }}</div>
               </div>
-              <span v-else>
-                {{ slotProps.placeholder }}
-              </span>
+              <span v-else>{{ slotProps.placeholder }}</span>
             </template>
             <template #option="slotProps">
               <div class="flex align-items-center">
-                <span>{{ slotProps.option.code }} -- </span>
+                <span>{{ slotProps.option.code }} --</span>
                 <div>{{ slotProps.option.name }}</div>
               </div>
             </template>
           </Dropdown>
           <div class="field mt-3">
-            <label for="" style="font-weight: 500">Gate </label>
+            <label for style="font-weight: 500">Gate</label>
             <MultiSelect
               v-model="selectedGates"
               :options="gates"
@@ -61,7 +57,7 @@
                 <div class="py-2 px-3">
                   <b>{{ selectedGates ? selectedGates.length : 0 }}</b>
                   item{{
-                    (selectedGates ? selectedGates.length : 0) > 1 ? "s" : ""
+                  (selectedGates ? selectedGates.length : 0) > 1 ? "s" : ""
                   }}
                   selected.
                 </div>
@@ -71,12 +67,7 @@
         </div>
       </div>
       <div class="flex w-100 justify-content-end">
-        <Button
-          type="button"
-          label="Submit"
-          icon="pi pi-check"
-          @click="addData()"
-        />
+        <Button type="button" label="Submit" icon="pi pi-check" @click="addData()" />
       </div>
     </div>
   </div>
@@ -97,7 +88,7 @@ const countries = ref([
   { name: "Red", code: "نقل" },
   { name: "Grey", code: "أتوبيس" },
   { name: "Beige", code: "ليموزين" },
-  { name: "Yellow", code: "اجنبية" },
+  { name: "Yellow", code: "اجنبية" }
 ]);
 
 // async function addData() {
@@ -107,20 +98,20 @@ await getData();
 async function getData() {
   const { data } = await useAsyncGql("getGates", {});
   console.log(data.value);
-  gates.value = data.value?.gates?.map((e) => {
+  gates.value = data.value?.gates?.map(e => {
     return {
       name: e.name,
-      id: e.id,
+      id: e.id
     };
   });
 }
 async function addData() {
-  let gatesid = selectedGates.value.map((e) => e.id);
+  let gatesid = selectedGates.value.map(e => e.id);
   const { data } = await useAsyncGql("addCar", {
     ownerName: name.value,
     color: selectedColor.value.name.toLowerCase(),
     plateNumber: plate.value,
-    gateids: gatesid,
+    gateids: gatesid
   });
   if (data.value) {
     name.value = "";
@@ -132,7 +123,7 @@ async function addData() {
       severity: "success",
       summary: "Info",
       detail: "Car Data Added successfully",
-      life: 3000,
+      life: 3000
     });
   }
 }

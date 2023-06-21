@@ -10,15 +10,8 @@
       </template>
     </ConfirmDialog>
     <div class="cameras flex flex-wrap justify-content-between gap-2">
-      <Dialog
-        v-model:visible="visible"
-        modal
-        :style="{ width: '30vw' }"
-        header="Confirmation"
-      >
-        <div
-          class="dialog-content flex flex-column justify-content-center align-items-center"
-        >
+      <Dialog v-model:visible="visible" modal :style="{ width: '30vw' }" header="Confirmation">
+        <div class="dialog-content flex flex-column justify-content-center align-items-center">
           <client-only>
             <lottie-player
               autoplay
@@ -27,13 +20,14 @@
               style="width: 300px"
               :direction="-1"
               :speed="2"
-            >
-            </lottie-player
-          ></client-only>
+            ></lottie-player>
+          </client-only>
 
           <h5 class="m-0 pb-2 myborder">
             Are you Sure you want to open this Gate
-            <span class="text-blue-300 text-lg font-normal"> (Gate 1)</span>
+            <span
+              class="text-blue-300 text-lg font-normal"
+            >(Gate 1)</span>
           </h5>
           <p class="text-blue-300 font-medium">And allow the car to enter</p>
         </div>
@@ -46,13 +40,14 @@
       <div class="camera-item" v-for="(camera, index) in 4" :key="index">
         <div class="camera">
           <div v-if="index === 0" class="iframe-contaienr">
-            <iframe
+            <!-- <iframe
               class="iframe"
               width="560"
               height="315"
               src="https://www.youtube.com/embed/zBBVnq20HFU?autoplay=1"
               title="YouTube video player"
-            ></iframe>
+            ></iframe>-->
+            <img src="http://192.168.1.10:5000/video_feed" />
           </div>
           <p v-else>camera {{ index + 1 }}</p>
         </div>
@@ -80,7 +75,7 @@ const no = () => {
     severity: "success",
     summary: "Confirmed",
     detail: "Gate opened successfully",
-    life: 3000,
+    life: 3000
   });
 };
 const yes = () => {
@@ -89,7 +84,7 @@ const yes = () => {
     severity: "error",
     summary: "Rejected",
     detail: "Gate is not opened",
-    life: 3000,
+    life: 3000
   });
 };
 </script>
@@ -119,5 +114,9 @@ const yes = () => {
     width: 100%;
     height: 100%;
   }
+}
+img {
+  height: 100%;
+  width: 100%;
 }
 </style>

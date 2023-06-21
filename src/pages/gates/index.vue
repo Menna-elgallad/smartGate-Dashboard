@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="card">
+    <div class="card" v-if="gates">
       <DataTable :value="gates" tableStyle="min-width: 50rem">
         <Column field="name" header="Name"></Column>
         <Column field="description" header="Description"></Column>
@@ -19,38 +19,33 @@
             <InputText id="name1" type="text" v-model="name" />
           </div>
           <div class="field">
-            <label for="Description" style="font-weight: 500"
-              >Description
-              <span class="text-blue-400 text-sm"
-                >(Location of the gate in short description)</span
-              >
+            <label for="Description" style="font-weight: 500">
+              Description
+              <span
+                class="text-blue-400 text-sm"
+              >(Location of the gate in short description)</span>
             </label>
-            <Textarea
-              id="Description"
-              type="text"
-              v-model="description"
-              rows="3"
-            />
+            <Textarea id="Description" type="text" v-model="description" rows="3" />
           </div>
           <div class="flex justify-content-between">
             <div class="field w-6">
-              <label for="latitude" style="font-weight: 500"
-                >Latitude
+              <label for="latitude" style="font-weight: 500">
+                Latitude
                 <span class="text-blue-400 text-sm">
                   (Horizontal lines that measure distance north or south of the
-                  equator)</span
-                >
+                  equator)
+                </span>
               </label>
 
               <InputText id="latitude" type="text" v-model="lat" />
             </div>
             <div class="field w-6 ml-2">
-              <label for="longitude" style="font-weight: 500"
-                >Longitude
-                <span class="text-blue-400 text-sm"
-                  >(Vertical lines that measure east or west of the meridian in
-                  Greenwich)</span
-                >
+              <label for="longitude" style="font-weight: 500">
+                Longitude
+                <span class="text-blue-400 text-sm">
+                  (Vertical lines that measure east or west of the meridian in
+                  Greenwich)
+                </span>
               </label>
 
               <InputText id="longitude" type="text" v-model="long" />
@@ -58,12 +53,7 @@
           </div>
         </div>
         <div class="flex w-100 justify-content-end">
-          <Button
-            type="button"
-            label="Submit"
-            icon="pi pi-check"
-            @click="addData()"
-          />
+          <Button type="button" label="Submit" icon="pi pi-check" @click="addData()" />
         </div>
       </div>
     </div>
@@ -81,7 +71,7 @@ const description = ref();
 await getData();
 async function getData() {
   const { data } = await useAsyncGql("getGates", {});
-  gates.value = data.value.gates;
+  gates.value = data.value?.gates;
 }
 
 async function addData() {
@@ -89,8 +79,9 @@ async function addData() {
     name: name.value,
     description: description.value,
     lat: lat.value,
-    long: long.value,
+    long: long.value
   });
+  console.log(data.value);
   if (data.value) {
     name.value = "";
     description.value = "";
@@ -101,7 +92,7 @@ async function addData() {
       severity: "success",
       summary: "Info",
       detail: "Gate Data Added successfully",
-      life: 3000,
+      life: 3000
     });
   }
 }

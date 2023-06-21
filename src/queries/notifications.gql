@@ -1,0 +1,10 @@
+query notificatios {
+  notifications {
+    id
+    created
+    updated
+    body
+    title
+    link
+  }
+}

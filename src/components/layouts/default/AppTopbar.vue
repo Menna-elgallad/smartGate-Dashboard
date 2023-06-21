@@ -4,7 +4,7 @@ export default {
   computed: {
     darkTheme() {
       return this.$appState.darkTheme;
-    },
+    }
   },
   methods: {
     onMenuToggle(event) {
@@ -14,13 +14,13 @@ export default {
       this.$emit("topbar-menu-toggle", event);
     },
     topbarImage() {
-      return this.$appState.darkTheme ? "/images/logo.png" : "/images/logo.png";
+      return this.$appState.darkTheme ? "/logo.png" : "/logo.png";
     },
     signout() {
       localStorage.removeItem("token");
       this.$router.push("/login");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -29,10 +29,7 @@ export default {
     <NuxtLink to="/" class="layout-topbar-logo">
       <img alt="Logo" :src="topbarImage()" style="height: 120px" />
     </NuxtLink>
-    <button
-      class="p-link layout-menu-button layout-topbar-button"
-      @click="onMenuToggle"
-    >
+    <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle">
       <i class="pi pi-bars" />
     </button>
 

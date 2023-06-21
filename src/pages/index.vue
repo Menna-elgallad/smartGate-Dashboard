@@ -6,7 +6,11 @@ const loading = ref(true);
 const countedTypes = ref();
 const router = useRouter();
 
-onMounted(() => {
+onMounted(async () => {
+  const { onMessage } = useFcm();
+  onMessage(payload => {
+    console.log(payload);
+  });
   const token = localStorage.getItem("token");
   if (token) {
     useGqlToken(token);
@@ -36,7 +40,7 @@ async function getDataCars() {
   cardata.value = data?.value?.allCars;
   loading.value = false;
   console.log(cardata.value);
-  colors.value = cardata.value.map((e) => {
+  colors.value = cardata.value.map(e => {
     return e.color;
   });
   for (let item of colors.value) {
@@ -79,7 +83,7 @@ const chartData = ref({
         "rgba(255, 159, 64, 0.2)",
         "rgba(75, 192, 192, 0.2)",
         "rgba(54, 162, 235, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
+        "rgba(153, 102, 255, 0.2)"
       ],
       borderColor: [
         "rgb(255, 159, 64)",
@@ -89,18 +93,18 @@ const chartData = ref({
         "rgb(255, 159, 64)",
         "rgb(75, 192, 192)",
         "rgb(54, 162, 235)",
-        "rgb(153, 102, 255)",
+        "rgb(153, 102, 255)"
       ],
-      borderWidth: 1,
-    },
-  ],
+      borderWidth: 1
+    }
+  ]
 });
 const chartOptions = ref({
   scales: {
     y: {
-      beginAtZero: true,
-    },
-  },
+      beginAtZero: true
+    }
+  }
 });
 </script>
 
@@ -111,15 +115,10 @@ const chartOptions = ref({
         <div class="mb-3">
           <div class="part1 flex">
             <div class="ml-3 head">
-              <span class="block text-900 text-xl font-semibold p-2"
-                >Cars in System</span
-              >
+              <span class="block text-900 text-xl font-semibold p-2">Cars in System</span>
             </div>
           </div>
-          <div
-            class="part2 flex w-full justify-content-around mt-4"
-            v-if="countedTypes"
-          >
+          <div class="part2 flex w-full justify-content-around mt-4" v-if="countedTypes">
             <div
               class="type flex flex-column align-items-center"
               v-for="(item, index) in countedTypes"
@@ -131,10 +130,7 @@ const chartOptions = ref({
                 style="width: 3.5rem; height: 3.5rem"
               >
                 <!-- <i class="pi pi-car text-blue-500 text-5xl" /> -->
-                <Icon
-                  name="ic:baseline-directions-car-filled"
-                  class="text-3xl text-blue-500"
-                ></Icon>
+                <Icon name="ic:baseline-directions-car-filled" class="text-3xl text-blue-500"></Icon>
               </div>
 
               <div
@@ -149,35 +145,24 @@ const chartOptions = ref({
                 class="flex align-items-center justify-content-center bg-orange-100 border-round"
                 style="width: 3.5rem; height: 3.5rem"
               >
-                <Icon
-                  name="ic:baseline-directions-bus"
-                  class="text-3xl text-orange-500"
-                ></Icon>
+                <Icon name="ic:baseline-directions-bus" class="text-3xl text-orange-500"></Icon>
               </div>
               <div
                 v-if="item[0] === 'أجنبية'"
                 class="flex align-items-center justify-content-center bg-purple-100 border-round"
                 style="width: 3.5rem; height: 3.5rem"
               >
-                <Icon
-                  name="ic:twotone-taxi-alert"
-                  class="text-3xl text-purple-500"
-                ></Icon>
+                <Icon name="ic:twotone-taxi-alert" class="text-3xl text-purple-500"></Icon>
               </div>
               <div
                 v-if="item[0] === 'تاكسي'"
                 class="flex align-items-center justify-content-center bg-cyan-100 border-round"
                 style="width: 3.5rem; height: 3.5rem"
               >
-                <Icon
-                  name="map:taxi-stand"
-                  class="text-3xl text-cyan-500"
-                ></Icon>
+                <Icon name="map:taxi-stand" class="text-3xl text-cyan-500"></Icon>
               </div>
 
-              <div
-                class="car-data mt-2 flex flex-column justify-content-center align-items-center"
-              >
+              <div class="car-data mt-2 flex flex-column justify-content-center align-items-center">
                 <h2 class="text-2xl font-bold">{{ item[1] }}</h2>
                 <p class="text-gray-500 font-medium">{{ item[0] }}</p>
               </div>
@@ -189,27 +174,17 @@ const chartOptions = ref({
     <div class="col-12 xl:col-6">
       <div class="card">
         <div class="ml-3 head">
-          <span class="block text-900 text-xl font-semibold p-2"
-            >Entry history conut</span
-          >
+          <span class="block text-900 text-xl font-semibold p-2">Entry history conut</span>
         </div>
-        <Chart
-          type="bar"
-          :data="chartData"
-          :options="chartOptions"
-          class="mt-3"
-        />
+        <Chart type="bar" :data="chartData" :options="chartOptions" class="mt-3" />
       </div>
     </div>
     <div class="col-12 xl:col-6">
       <div class="card">
         <h5>Cars Data</h5>
-        <NuxtLink to="/cars" class="linkCar"
-          ><img
-            src="../assets/img//Screenshot 2023-04-30 151753.png"
-            alt=""
-            class="table-img"
-        /></NuxtLink>
+        <NuxtLink to="/cars" class="linkCar">
+          <img src="../assets/img//Screenshot 2023-04-30 151753.png" alt class="table-img" />
+        </NuxtLink>
       </div>
     </div>
   </div>

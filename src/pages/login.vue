@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: "empty",
+  layout: "empty"
 });
 
 const { $appState } = useNuxtApp();
-
+const fcm = ref();
 const email = ref("");
 const password = ref("");
 const checked = ref(false);
@@ -16,7 +16,9 @@ async function fetch() {
     username: "admin",
     email: email.value,
     password: password.value,
+    fcm: fcm.value
   });
+  console.log("data", data.value);
   token.value = data.value?.login?.accessToken;
   if (token.value) {
     router.push("/");
@@ -24,6 +26,11 @@ async function fetch() {
   }
   localStorage.setItem("token", token.value);
 }
+
+onMounted(async () => {
+  const { onMessage, getToken } = useFcm();
+  fcm.value = await getToken();
+});
 </script>
 
 <template>
@@ -56,16 +63,12 @@ async function fetch() {
           "
         >
           <div class="text-center mb-5">
-            <div class="text-900 text-3xl font-medium mb-3">
-              Welcome to Smart Gate System !
-            </div>
+            <div class="text-900 text-3xl font-medium mb-3">Welcome to Smart Gate System !</div>
             <span class="text-600 font-medium">Sign in to continue</span>
           </div>
 
           <div class="w-full md:w-10 mx-auto">
-            <label for="email1" class="block text-900 text-xl font-medium mb-2"
-              >Email</label
-            >
+            <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
             <InputText
               id="email1"
               v-model="email"
@@ -75,11 +78,7 @@ async function fetch() {
               style="padding: 1rem"
             />
 
-            <label
-              for="password1"
-              class="block text-900 font-medium text-xl mb-2"
-              >Password</label
-            >
+            <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
             <Password
               id="password1"
               v-model="password"
@@ -91,21 +90,15 @@ async function fetch() {
 
             <div class="flex align-items-center justify-content-between mb-5">
               <div class="flex align-items-center">
-                <Checkbox
-                  id="rememberme1"
-                  v-model="checked"
-                  :binary="true"
-                  class="mr-2"
-                />
+                <Checkbox id="rememberme1" v-model="checked" :binary="true" class="mr-2" />
                 <label for="rememberme1">Remember me</label>
               </div>
               <a
                 class="font-medium no-underline ml-2 text-right cursor-pointer"
                 style="color: var(--primary-color)"
-                >Forgot password?</a
-              >
+              >Forgot password?</a>
             </div>
-            <Button label="Sign In" class="w-full p-3 text-xl" @click="fetch" />
+            <Button label="Sign In" class="w-full p-3 text-xl" @click="fetch()" />
           </div>
         </div>
       </div>
