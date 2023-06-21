@@ -102,7 +102,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      GQL_HOST: process.env.GQL_HOST || 'http://localhost:5000/graphql' // add .env file and GQL_HOST variable to add the graphql host
+      GQL_HOST: process.env.GQL_HOST || 'https://smartgate.onrender.com/graphql' // add .env file and GQL_HOST variable to add the graphql host
       // api.spacex is a placeholder api
     }
   },
